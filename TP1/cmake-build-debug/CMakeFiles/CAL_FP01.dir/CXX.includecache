@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Factorial.cpp
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.cpp
 iostream
 -
-vector
+Change.h
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.h
+sstream
 -
-Factorial.h
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Factorial.h
 
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Factorial.h
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.h
+string
+-
 
