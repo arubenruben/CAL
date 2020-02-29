@@ -6,15 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.cpp
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Sum.cpp
 iostream
 -
-Change.h
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.h
-sstream
--
-
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Change.h
 string
+-
+sstream
 -
 
