@@ -6,11 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Sum.cpp
-iostream
--
-string
--
-sstream
--
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Partitioning.cpp
+Partitioning.h
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Partitioning.h
+
+/home/ruben/Desktop/FEUP/CAL/TP1/Tests/Partitioning.h
 
