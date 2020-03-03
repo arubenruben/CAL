@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.cpp
+Labirinth.h
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.h
+iostream
+-
+
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.h
+
