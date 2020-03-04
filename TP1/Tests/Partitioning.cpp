@@ -16,7 +16,7 @@ int s_recursive(int n,int k)
 }
 
 int s_dynamic(int n,int k)
-{
+{   
 	return 1;
 }
 
