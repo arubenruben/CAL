@@ -6,21 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Sudoku.cpp
-Sudoku.h
-/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Sudoku.h
-
-/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Sudoku.h
-string
--
-sstream
--
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.cpp
+Labirinth.h
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.h
 iostream
 -
-stdio.h
--
-stdlib.h
--
-time.h
--
+
+/home/ruben/Desktop/FEUP/CAL/TP2/Tests/Labirinth.h
 

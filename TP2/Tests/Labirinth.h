@@ -15,6 +15,10 @@ public:
 	Labirinth(int values[10][10]);
 	void printLabirinth();
 	bool findGoal(int x, int y);
+
+    bool solutionAt(const int x,const int y);
+
+    bool promising(const int x, const int y);
 };
 
 #endif /* LABIRINTH_H_ */
