@@ -13,9 +13,9 @@ Sudoku::Sudoku()
 }
 
 /**
- * Inicia um Sudoku com um conteúdo inicial.
- * Lança excepção IllegalArgumentException se os valores
- * estiverem fora da gama de 1 a 9 ou se existirem números repetidos
+ * Inicia um Sudoku com um conteï¿½do inicial.
+ * Lanï¿½a excepï¿½ï¿½o IllegalArgumentException se os valores
+ * estiverem fora da gama de 1 a 9 ou se existirem nï¿½meros repetidos
  * por linha, coluna ou bloc 3x3.
  *
  * @param nums matriz com os valores iniciais (0 significa por preencher)
@@ -61,7 +61,7 @@ void Sudoku::initialize()
 }
 
 /**
- * Obtem o conteúdo actual (só para leitura!).
+ * Obtem o conteï¿½do actual (sï¿½ para leitura!).
  */
 int** Sudoku::getNumbers()
 {
@@ -79,7 +79,7 @@ int** Sudoku::getNumbers()
 }
 
 /**
- * Verifica se o Sudoku já está completamente resolvido
+ * Verifica se o Sudoku jï¿½ estï¿½ completamente resolvido
  */
 bool Sudoku::isComplete()
 {
@@ -90,11 +90,41 @@ bool Sudoku::isComplete()
 
 /**
  * Resolve o Sudoku.
- * Retorna indicação de sucesso ou insucesso (sudoku impossível).
+ * Retorna indicaï¿½ï¿½o de sucesso ou insucesso (sudoku impossï¿½vel).
  */
 bool Sudoku::solve()
 {
-	return false;
+    int x=-1,y=-1;
+
+    if (Sudoku::isComplete() == true)
+    {
+        return true;
+    }
+
+    if (Sudoku::findBestCell(x, y) == false)
+    {
+        return false;
+    }
+
+    for (int n = 1; n < 10; n++)
+    {
+        if (Sudoku::accepts(x, y, n))
+        {
+            Sudoku::setter(x, y, n);
+
+            if (Sudoku::solve() == true)
+            {
+                return true;
+            }
+                //Do backtrack, we must undo
+            else
+            {
+                Sudoku::undo(x, y, n);
+            }
+        }
+    }
+
+    return false;
 }
 
 
@@ -111,4 +141,98 @@ void Sudoku::print()
 
 		cout << endl;
 	}
+}
+//Return the best cell with least possibilities. If there is no possibilities return false ----> Backtrack
+bool Sudoku::findBestCell(int &best_x, int &best_y){
+
+    int bestX=-1;
+    int bestY=-1;
+
+    int minPossibleNumbers=9999;
+
+
+
+    for(int x=0;x<9;x++){
+
+        for(int y=0;y<9;y++){
+
+            //Alread Filled
+            if(this->numbers[x][y]!=0){
+                continue;
+            }
+
+            int counterPossibleNumbersTemp=0;
+
+            for(int n=1;n<10;n++){
+
+                if(this->block3x3HasNumber[x][y][n]==false&&
+                    this->columnHasNumber[y][n]== false&&
+                    this->lineHasNumber[x][n]==false
+                ){
+                    counterPossibleNumbersTemp++;
+                }
+            }
+
+            if(counterPossibleNumbersTemp<minPossibleNumbers){
+                bestX=x;
+                bestY=y;
+                minPossibleNumbers=counterPossibleNumbersTemp;
+            }
+            //Greedy approach. 1 solution is always the optimal solution we can have
+            if(minPossibleNumbers==1){
+                best_x=bestX;
+                best_y=bestY;
+                return true;
+            }
+
+
+        }
+
+    }
+
+    if(bestX==-1||bestY==-1){
+        return false;
+    }
+
+    best_x=bestX;
+    best_y=bestY;
+
+    return true;
+
+}
+
+bool Sudoku::accepts(int x, int y, int n)
+{
+
+    if (columnHasNumber[y][n] == false &&
+        lineHasNumber[x][n] == false &&
+        block3x3HasNumber[x / 3][y / 3][n] == false)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void Sudoku::setter(int x, int y, int n)
+{
+
+    Sudoku::countFilled++;
+    Sudoku::columnHasNumber[y][n] = true;
+    Sudoku::lineHasNumber[x][n] = true;
+    Sudoku::block3x3HasNumber[x/3][y/3][n]=true;
+    Sudoku::numbers[x][y] = n;
+
+    return;
+}
+
+void Sudoku::undo(int x, int y, int n)
+{
+    Sudoku::countFilled--;
+    Sudoku::columnHasNumber[y][n] = false;
+    Sudoku::lineHasNumber[x][n] = false;
+    Sudoku::block3x3HasNumber[x/3][y/3][n]=false;
+    Sudoku::numbers[x][y] = 0;
+
+    return;
 }
