@@ -86,20 +86,35 @@ bool Sudoku::isComplete()
 	return countFilled == 9 * 9;
 }
 
+bool Sudoku::solve(){
 
+    solve(true);
+
+    cout<<this->numSolutions<<endl;
+
+}
 
 /**
  * Resolve o Sudoku.
  * Retorna indica��o de sucesso ou insucesso (sudoku imposs�vel).
  */
-bool Sudoku::solve()
+
+bool Sudoku::solve(bool countValues)
 {
     int x=-1,y=-1;
 
     if (Sudoku::isComplete() == true)
     {
-        return true;
+        if(countValues){
+            cout<<"Aqui"<<endl;
+            this->numSolutions++;
+            return false;
+
+
+        }else
+            return true;
     }
+
 
     if (Sudoku::findBestCell(x, y) == false)
     {

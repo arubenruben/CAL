@@ -23,7 +23,7 @@ class Sudoku
 	 * 0 quer dizer n�o preenchido.
 	 */
 	int numbers[9][9];
-
+    int numSolutions;
 	/**
 	 * Informa��o derivada da anterior, para acelerar processamento (n�mero de 1 a 9, nao usa 0)
 	 */
@@ -80,6 +80,8 @@ public:
     void undo(int x, int y, int n);
 
     bool accepts(int x, int y, int n);
+
+    bool solve(bool countValues);
 };
 
 #endif /* SUDOKU_H_ */
