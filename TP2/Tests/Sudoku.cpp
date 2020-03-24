@@ -4,7 +4,6 @@
  */
 
 #include "Sudoku.h"
-
 /** Inicia um Sudoku vazio.
  */
 Sudoku::Sudoku()
@@ -57,6 +56,8 @@ void Sudoku::initialize()
 		}
 	}
 
+	this->numSolutions=(int *) malloc(sizeof(int));
+
 	this->countFilled = 0;
 }
 
@@ -90,8 +91,6 @@ bool Sudoku::solve(){
 
     solve(true);
 
-    cout<<this->numSolutions<<endl;
-
 }
 
 /**
@@ -106,11 +105,9 @@ bool Sudoku::solve(bool countValues)
     if (Sudoku::isComplete() == true)
     {
         if(countValues){
-            cout<<"Aqui"<<endl;
-            this->numSolutions++;
+            (*numSolutions)++;
+            cout<<(*numSolutions)<<endl;
             return false;
-
-
         }else
             return true;
     }
