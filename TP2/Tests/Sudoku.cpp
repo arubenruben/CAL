@@ -6,6 +6,10 @@
 #include "Sudoku.h"
 /** Inicia um Sudoku vazio.
  */
+
+int countSolutions=0;
+
+
 Sudoku::Sudoku()
 {
 	this->initialize();
@@ -61,6 +65,46 @@ void Sudoku::initialize()
 	this->countFilled = 0;
 }
 
+void Sudoku::generate(){
+
+    int sudokuSize=81;
+
+    this->initialize();
+
+    srand (time(NULL));
+
+    int numberToFill=rand()%(sudokuSize/2);
+
+
+    while(this->countFilled<numberToFill){
+
+        int randX=rand()%9;
+        int randY=rand()%9;
+
+        if(this->numbers[randX][randY]!=0)
+            continue;
+
+
+        int randValue=rand()%10+1;
+
+        this->setter(randX,randY,randValue);
+
+
+        this->solve(true);
+
+        if(countSolutions==1){
+            cout<<"Gerei:"<<endl;
+            this->print();
+            return;
+        }
+        else if (countSolutions==0){
+            this->undo(randX,randY,randValue);
+        }
+
+    }
+
+}
+
 /**
  * Obtem o conte�do actual (s� para leitura!).
  */
@@ -89,8 +133,11 @@ bool Sudoku::isComplete()
 
 bool Sudoku::solve(){
 
-    solve(true);
+    //this->generate();
 
+    bool result=solve(false);
+
+    return  result;
 }
 
 /**
@@ -105,13 +152,11 @@ bool Sudoku::solve(bool countValues)
     if (Sudoku::isComplete() == true)
     {
         if(countValues){
-            (*numSolutions)++;
-            cout<<(*numSolutions)<<endl;
+            countSolutions++;
             return false;
         }else
             return true;
     }
-
 
     if (Sudoku::findBestCell(x, y) == false)
     {
@@ -124,7 +169,7 @@ bool Sudoku::solve(bool countValues)
         {
             Sudoku::setter(x, y, n);
 
-            if (Sudoku::solve() == true)
+            if (Sudoku::solve(countValues) == true)
             {
                 return true;
             }
@@ -161,8 +206,6 @@ bool Sudoku::findBestCell(int &best_x, int &best_y){
     int bestY=-1;
 
     int minPossibleNumbers=9999;
-
-
 
     for(int x=0;x<9;x++){
 

@@ -82,6 +82,8 @@ public:
     bool accepts(int x, int y, int n);
 
     bool solve(bool countValues);
+
+    void generate();
 };
 
 #endif /* SUDOKU_H_ */
