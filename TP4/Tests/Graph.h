@@ -243,7 +243,6 @@ bool Graph<T>::removeVertex(const T &in) {
         return true;
     }
 
-
     return false;
 }
 
@@ -256,8 +255,20 @@ bool Graph<T>::removeVertex(const T &in) {
  */
 template <class T>
 vector<T> Graph<T>::dfs() const {
-	// TODO (7 lines)
-	vector<T> res;
+
+    vector<T> res;
+
+    for (Vertex<T>* vPtr : vertexSet) {
+        vPtr->visited = false;
+    }
+
+    for (Vertex<T>* vPtr : vertexSet) {
+        if (!vPtr->visited) {
+            res.push_back(vPtr->info);
+            dfsVisit(vPtr, res);
+        }
+    }
+
 	return res;
 }
 
@@ -267,7 +278,19 @@ vector<T> Graph<T>::dfs() const {
  */
 template <class T>
 void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
-	// TODO (7 lines)
+
+    if(v==NULL){
+        cout<<"DFS vertix null"<<endl;
+        return;
+    }
+
+    v->visited= true;
+    for (Edge<T> edge : v->adj) {
+        if (!edge.dest->visited) {
+            res.push_back(edge.dest->info);
+            dfsVisit(edge.dest, res);
+        }
+    }
 }
 
 /****************** 2b) bfs ********************/
@@ -280,11 +303,39 @@ void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
  */
 template <class T>
 vector<T> Graph<T>::bfs(const T & source) const {
-	// TODO (22 lines)
-	// HINT: Use the flag "visited" to mark newly discovered vertices .
-	// HINT: Use the "queue<>" class to temporarily store the vertices.
-	vector<T> res;
-	return res;
+
+    queue<Vertex<T>*> queueTemp;
+    vector<T> arrayRet;
+
+    Vertex<T>* vertexAux=findVertex(source);
+
+	if(vertexAux==NULL){
+        return arrayRet;
+	}
+
+	for(Vertex<T>* vertex: this->vertexSet){
+        vertex->visited=false;
+	}
+
+	vertexAux->visited= true;
+
+	queueTemp.push(vertexAux);
+
+	while(!queueTemp.empty()){
+
+	    vertexAux=queueTemp.front();
+	    queueTemp.pop();
+        arrayRet.push_back(vertexAux->info);
+
+        for(Edge<T> edg:vertexAux->adj){
+
+	        if(edg.dest->visited==false){
+                edg.dest->visited=true;
+	            queueTemp.push(edg.dest);
+	        }
+	    }
+	}
+	return arrayRet;
 }
 
 /****************** 2c) toposort ********************/

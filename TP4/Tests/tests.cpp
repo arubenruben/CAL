@@ -94,7 +94,7 @@ TEST(CAL_FP04, test_removeEdge) {
 }
 
 TEST(CAL_FP04, test_dfs) {
-    /* //uncomment test body below!
+     //uncomment test body below!
     Graph<Person> net1;
     createNetwork(net1);
     vector<Person> v1 = net1.dfs();
@@ -104,11 +104,11 @@ TEST(CAL_FP04, test_dfs) {
             EXPECT_EQ(names[i], v1[i].getName());
         else
             EXPECT_EQ(names[i], "(null)");
-     */
+
 }
 
 TEST(CAL_FP04, test_bfs) {
-    /* //uncomment test body below!
+     //uncomment test body below!
     Graph<Person> net1;
     createNetwork(net1);
     vector<Person> v1 = net1.bfs(Person("Ana",19));
@@ -118,7 +118,6 @@ TEST(CAL_FP04, test_bfs) {
             EXPECT_EQ(names[i], v1[i].getName());
         else
             EXPECT_EQ(names[i], "(null)");
-     */
 }
 
 TEST(CAL_FP04, test_removeVertex_Again) {
