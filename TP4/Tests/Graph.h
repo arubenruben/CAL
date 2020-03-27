@@ -93,7 +93,8 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
  */
 template <class T>
 bool Graph<T>::addVertex(const T &in) {
-    //Exists Vertix
+
+    //Already Exists Vertex
     if(this->findVertex(in))
         return false;
 
@@ -113,9 +114,6 @@ bool Graph<T>::addVertex(const T &in) {
  */
 template <class T>
 bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
-	// TODO (6 lines)
-	// HINT: use findVertex to obtain the actual vertices
-	// HINT: use the next function to actually add the edge
 
     Vertex<T>* vertexOrigin=this->findVertex(sourc);
 
@@ -182,13 +180,14 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
 template <class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
 
-    if(this==d){
-        cout<<"Cannot remove a vertex to himself"<<endl;
-        return  false;
-    }
     if(d==NULL){
         cout<<"Destination Vertex is NULL"<<endl;
         return false;
+    }
+
+    if(this==d){
+        cout<<"Cannot remove a vertex to himself"<<endl;
+        return  false;
     }
 
     for (typename vector<Edge<T>>::iterator i = this->adj.begin(); i != this->adj.end(); i++){
@@ -215,19 +214,19 @@ bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
  */
 template <class T>
 bool Graph<T>::removeVertex(const T &in) {
-	// TODO (10 lines)
-	// HINT: use an iterator to scan the "vertexSet" vector and then erase the vertex.
-	// HINT: take advantage of "removeEdgeTo" to remove incoming edges.
+    // TODO (10 lines)
+    // HINT: use an iterator to scan the "vertexSet" vector and then erase the vertex.
+    // HINT: take advantage of "removeEdgeTo" to remove incoming edges.
 
-	//Iterate over all vertices ao remove the edges whose destination is this vertex
+    //Iterate over all vertices ao remove the edges whose destination is this vertex
 
-	Vertex <T> *vertexToRemove=this->findVertex(in);
+    Vertex <T> *vertexToRemove=this->findVertex(in);
     typename vector<Vertex<T>*>::iterator indexItemToRemove=vertexSet.end();
 
-	if(vertexToRemove==NULL){
-	    cout<<"The vertex to remove doesnt exist"<<endl;
-	    return false;
-	}
+    if(vertexToRemove==NULL){
+        cout<<"The vertex to remove doesnt exist"<<endl;
+        return false;
+    }
     for (typename vector<Vertex<T>*>::iterator i = this->vertexSet.begin(); i != this->vertexSet.end(); i++){
 
         //The removal vertex
@@ -245,9 +244,8 @@ bool Graph<T>::removeVertex(const T &in) {
     }
 
 
-	return false;
+    return false;
 }
-
 
 /****************** 2a) dfs ********************/
 
