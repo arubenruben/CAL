@@ -142,7 +142,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 template <class T>
 void Vertex<T>::addEdge(Vertex<T> *d, double w) {
     Edge<T>edgeAux(d,w);
-    d->adj.push_back(edgeAux);
+    this->adj.push_back(edgeAux);
 }
 
 
@@ -182,6 +182,10 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
 template <class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
 
+    if(this==d){
+        cout<<"Cannot remove a vertex to himself"<<endl;
+        return  false;
+    }
     if(d==NULL){
         cout<<"Destination Vertex is NULL"<<endl;
         return false;
