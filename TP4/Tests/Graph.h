@@ -218,6 +218,33 @@ bool Graph<T>::removeVertex(const T &in) {
 	// TODO (10 lines)
 	// HINT: use an iterator to scan the "vertexSet" vector and then erase the vertex.
 	// HINT: take advantage of "removeEdgeTo" to remove incoming edges.
+
+	//Iterate over all vertices ao remove the edges whose destination is this vertex
+
+	Vertex <T> *vertexToRemove=this->findVertex(in);
+    typename vector<Vertex<T>*>::iterator indexItemToRemove=vertexSet.end();
+
+	if(vertexToRemove==NULL){
+	    cout<<"The vertex to remove doesnt exist"<<endl;
+	    return false;
+	}
+    for (typename vector<Vertex<T>*>::iterator i = this->vertexSet.begin(); i != this->vertexSet.end(); i++){
+
+        //The removal vertex
+        if((*i)->info==in){
+            indexItemToRemove=i;
+            continue;
+        }
+        (*i)->removeEdgeTo(vertexToRemove);
+    }
+    //Remove
+    if(indexItemToRemove!=vertexSet.end()){
+        this->vertexSet.erase(indexItemToRemove);
+        delete (*indexItemToRemove);
+        return true;
+    }
+
+
 	return false;
 }
 
