@@ -349,8 +349,32 @@ vector<T> Graph<T>::bfs(const T & source) const {
 
 template<class T>
 vector<T> Graph<T>::topsort() const {
-	// TODO (26 lines)
+
 	vector<T> res;
+    queue<Vertex<T>*> queueTemp;
+
+	for(Vertex<T>* vertex:this->vertexSet){
+        vertex->indegree=0;
+	}
+
+	for(Vertex<T>*vertex:this->vertexSet){
+
+	    for(Edge<T> edge:vertex->adj){
+	        edge.dest->indegree++;
+	    }
+
+	}
+
+	for(Vertex<T>*vertex:this->vertexSet){
+
+	    if()
+
+
+	}
+
+
+
+
 	return res;
 }
 
