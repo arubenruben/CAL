@@ -93,9 +93,15 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
  */
 template <class T>
 bool Graph<T>::addVertex(const T &in) {
-	// TODO (4 lines)
-	// HINT: use the findVertex function to check if a vertex already exists
-	return false;
+    //Exists Vertix
+    if(this->findVertex(in))
+        return false;
+
+    Vertex<T> * vertexAux= new Vertex<T>(in);
+
+    this->vertexSet.push_back(vertexAux);
+
+	return true;
 }
 
 /****************** 1b) addEdge ********************/
@@ -110,7 +116,23 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 	// TODO (6 lines)
 	// HINT: use findVertex to obtain the actual vertices
 	// HINT: use the next function to actually add the edge
-	return false;
+
+    Vertex<T>* vertexOrigin=this->findVertex(sourc);
+
+    if(vertexOrigin==NULL){
+        cout <<"Vertex origin do not exists"<<endl;
+        return false;
+    }
+
+    Vertex<T>* vertexDestination=this->findVertex(dest);
+
+    if(vertexDestination==NULL){
+        cout<<"Vertex Destination do not exists"<<endl;
+        return false;
+    }
+    vertexOrigin->addEdge(vertexDestination,w);
+
+	return true;
 }
 
 /*
@@ -119,7 +141,8 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
  */
 template <class T>
 void Vertex<T>::addEdge(Vertex<T> *d, double w) {
-	// TODO (1 line)
+    Edge<T>edgeAux(d,w);
+    d->adj.push_back(edgeAux);
 }
 
 
@@ -132,10 +155,23 @@ void Vertex<T>::addEdge(Vertex<T> *d, double w) {
  */
 template <class T>
 bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
-	// TODO (5 lines)
-	// HINT: Use "findVertex" to obtain the actual vertices.
-	// HINT: Use the next function to actually remove the edge.
-	return false;
+
+    Vertex<T>* vertexOrigin=this->findVertex(sourc);
+
+    if(vertexOrigin==NULL){
+        cout <<"Vertex origin do not exists"<<endl;
+        return false;
+    }
+
+    Vertex<T>* vertexDestination=this->findVertex(dest);
+
+    if(vertexDestination==NULL){
+        cout<<"Vertex Destination do not exists"<<endl;
+        return false;
+    }
+
+    return vertexOrigin->removeEdgeTo(vertexDestination);
+
 }
 
 /*
@@ -145,8 +181,23 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
  */
 template <class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
-	// TODO (6 lines)
-	// HINT: use an iterator to scan the "adj" vector and then erase the edge.
+
+    if(d==NULL){
+        cout<<"Destination Vertex is NULL"<<endl;
+        return false;
+    }
+
+    for (typename vector<Edge<T>>::iterator i = this->adj.begin(); i != this->adj.end(); i++){
+
+        //Other vertixes
+        if((*i).dest!=d)
+            continue;
+
+        this->adj.erase(i);
+        return true;
+
+    }
+
 	return false;
 }
 
