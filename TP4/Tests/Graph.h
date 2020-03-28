@@ -350,8 +350,8 @@ vector<T> Graph<T>::bfs(const T & source) const {
 template<class T>
 vector<T> Graph<T>::topsort() const {
 
-	vector<T> res;
-    queue<Vertex<T>*> queueTemp;
+    vector<T> res;
+    queue<Vertex<T>*> queueTempNoIndegree;
 
 	for(Vertex<T>* vertex:this->vertexSet){
         vertex->indegree=0;
@@ -366,14 +366,35 @@ vector<T> Graph<T>::topsort() const {
 	}
 
 	for(Vertex<T>*vertex:this->vertexSet){
-
-	    if()
-
-
+	    if(vertex->indegree==0)
+	        queueTempNoIndegree.push(vertex);
 	}
 
+	while(!queueTempNoIndegree.empty()){
+        Vertex<T>*vertex=queueTempNoIndegree.front();
+        queueTempNoIndegree.pop();
+        res.push_back(vertex->info);
 
+        for(Edge<T> edge:vertex->adj){
 
+            Vertex<T>*dest=edge.dest;
+
+            //Subtract before test if becomes an indegree 0 vertex
+            if(dest->indegree>0){
+                dest->indegree--;
+            }
+
+            if(dest->indegree==0)
+                queueTempNoIndegree.push(dest);
+        }
+	}
+
+	if(res.size()!=this->vertexSet.size()){
+	    cout<<"Graph is not a DAG. Cannot order Topologicaly"<<endl;
+	    //Erase the vector
+	    res.clear();
+	    return res;
+	}
 
 	return res;
 }
