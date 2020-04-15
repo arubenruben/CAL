@@ -173,13 +173,114 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 
 template<class T>
 void Graph<T>::unweightedShortestPath(const T &orig) {
-	// TODO
+
+    queue<Vertex<T>*> queueAux;
+
+    Vertex<T> * auxVertex;
+
+    for(Vertex<T>* vertex:this->vertexSet){
+
+        if(vertex->info==orig)
+            auxVertex=vertex;
+
+        vertex->dist=INF;
+        vertex->path=NULL;
+    }
+
+    if(auxVertex==NULL){
+        cout<<"This source vertex does not exist"<<endl;
+        return;
+    }
+
+    auxVertex->dist=0;
+
+    queueAux.push(auxVertex);
+
+    while (!queueAux.empty()){
+
+        auxVertex=queueAux.front();
+
+        queueAux.pop();
+
+        for(Edge<T> edgeAdj:auxVertex->adj){
+
+            Vertex<T> * adjVertex=edgeAdj.dest;
+
+            if(adjVertex->getDist()==INF){
+                queueAux.push(adjVertex);
+                adjVertex->dist=auxVertex->getDist()+1;
+                adjVertex->path=auxVertex;
+            }
+        }
+
+    }
+
 }
 
 
 template<class T>
 void Graph<T>::dijkstraShortestPath(const T &origin) {
-	// TODO
+
+    Vertex<T> * vertexOrigin=NULL;
+
+    MutablePriorityQueue<Vertex<T>> queueAux;
+
+    for(Vertex<T>* vertex:this->vertexSet){
+
+        if(vertex->getInfo()==origin)
+            vertexOrigin=vertex;
+
+        vertex->dist=INF;
+        vertex->path=NULL;
+    }
+
+    if(vertexOrigin==NULL){
+        cout<<"This source vertex does not exist"<<endl;
+        return;
+    }
+
+    vertexOrigin->dist=0;
+
+    queueAux.insert(vertexOrigin);
+
+
+    while (!queueAux.empty()){
+
+        Vertex<T>* vertexSource=queueAux.extractMin();
+
+        for(Edge<T> edge:vertexSource->adj){
+
+            bool notInQueue = edge.dest->dist == numeric_limits<double>::max();
+
+            Vertex<T> *vertexAdj = edge.dest;
+
+            //If it improve, then... refresh
+            if(vertexAdj->getDist()>vertexSource->getDist()+edge.weight){
+
+                vertexAdj->dist=vertexSource->getDist()+edge.weight;
+                vertexAdj->path=vertexSource;
+
+                if(notInQueue){
+                    queueAux.insert(vertexAdj);
+                }else{
+                    queueAux.decreaseKey(vertexAdj);
+                }
+            }
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
 }
 
 
@@ -192,8 +293,26 @@ void Graph<T>::bellmanFordShortestPath(const T &orig) {
 template<class T>
 vector<T> Graph<T>::getPathTo(const T &dest) const{
 	vector<T> res;
-	// TODO
-	return res;
+
+	Vertex<T>* vertexAux=this->findVertex(dest);
+	Vertex<T>* vertexPath=vertexAux->getPath();
+    res.push_back(vertexAux->info);
+
+	if(vertexAux==NULL){
+	    cout<<"Cannot get path to: dest vertex is NULL"<<endl;
+        res.clear();
+        return res;
+
+	}
+
+	while(vertexPath!=NULL){
+	    res.push_back(vertexPath->info);
+	    vertexPath=vertexPath->getPath();
+	}
+
+    std::reverse(res.begin(), res.end());
+
+    return res;
 }
 
 
