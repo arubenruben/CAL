@@ -298,9 +298,9 @@ cxxabi.h
 acxx_demangle.h
 -
 
-/home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googletest/src/gtest_main.cc
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googletest/src/gtest_main.cc
 stdio.h
 -
 gtest/gtest.h
-/home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googletest/src/gtest/gtest.h
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googletest/src/gtest/gtest.h
 

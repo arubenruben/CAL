@@ -268,25 +268,61 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
             }
         }
 
-
-
-
     }
-
-
-
-
-
-
-
-
-
 }
 
 
 template<class T>
 void Graph<T>::bellmanFordShortestPath(const T &orig) {
-	// TODO
+
+    Vertex<T> * startVertex=this->findVertex(orig);
+
+    if(startVertex==NULL){
+        cout<<"BellmanFord start vertex is NULL";
+        return;
+    }
+
+    //Pre process
+    for(Vertex<T>* vertex: this->vertexSet ){
+        vertex->dist=INF;
+        vertex->path=NULL;
+    }
+
+    startVertex->dist=0;
+
+    for(int i=0;i<this->vertexSet.size();i++){
+
+        for(int j=0;j<this->vertexSet.size();j++){
+
+            Vertex<T>* origin=this->vertexSet.at(j);
+
+            for(Edge<T> edge: origin->adj){
+
+                Vertex<T> *dest = edge.dest;
+                //If the cost to this point gets better
+                if(dest->dist > (origin->dist + edge.weight)) {
+                    dest->dist = origin->dist + edge.weight;
+                    dest->path = origin;
+                }
+            }
+        }
+    }
+
+    for(int j=0;j<this->vertexSet.size();j++){
+
+        Vertex<T>* origin=this->vertexSet.at(j);
+
+        for(Edge<T> edge:origin->adj){
+
+            Vertex<T>* dest=edge.dest;
+            //If the cost to this point gets better, in the last iteration, it is an error
+            if(dest->dist > (origin->dist + edge.weight)) {
+                cout<<"Bellman-Ford has cicles"<<endl;
+                return;
+            }
+        }
+    }
+    return;
 }
 
 
@@ -321,12 +357,18 @@ vector<T> Graph<T>::getPathTo(const T &dest) const{
 
 template<class T>
 void Graph<T>::floydWarshallShortestPath() {
-	// TODO
+
+
+    return;
 }
 
 template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
+
+
+
+
 	// TODO
 	return res;
 }

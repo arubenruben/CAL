@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -Wall -Wshadow -Werror -Wno-error=dangling-else -DGTEST_HAS_PTH
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googlemock/include -I/home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googlemock -isystem /home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googletest/include -isystem /home/ruben/Desktop/FEUP/CAL/TP5/lib/googletest-master/googletest 
+CXX_INCLUDES = -I/home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googlemock/include -I/home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googlemock -isystem /home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googletest/include -isystem /home/ruben/Desktop/FEUP/CAL/TPs/TP5/lib/googletest-master/googletest 
 

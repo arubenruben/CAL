@@ -514,7 +514,7 @@ cxxabi.h
 acxx_demangle.h
 -
 
-/home/ruben/Desktop/FEUP/CAL/TP5/Tests/Graph.h
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/Tests/Graph.h
 vector
 -
 queue
@@ -526,13 +526,13 @@ limits
 cmath
 -
 MutablePriorityQueue.h
-/home/ruben/Desktop/FEUP/CAL/TP5/Tests/MutablePriorityQueue.h
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/Tests/MutablePriorityQueue.h
 
-/home/ruben/Desktop/FEUP/CAL/TP5/Tests/MutablePriorityQueue.h
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/Tests/MutablePriorityQueue.h
 vector
 -
 
-/home/ruben/Desktop/FEUP/CAL/TP5/Tests/tests.cpp
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/Tests/tests.cpp
 gtest/gtest.h
 -
 gmock/gmock.h
@@ -546,5 +546,5 @@ time.h
 chrono
 -
 Graph.h
-/home/ruben/Desktop/FEUP/CAL/TP5/Tests/Graph.h
+/home/ruben/Desktop/FEUP/CAL/TPs/TP5/Tests/Graph.h
 
