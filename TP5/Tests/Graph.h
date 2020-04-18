@@ -109,14 +109,17 @@ public:
 	vector<Vertex<T> *> getVertexSet() const;
 
 	// Fp05 - single source
-	void unweightedShortestPath(const T &s);    //TODO...
-	void dijkstraShortestPath(const T &s);      //TODO...
-	void bellmanFordShortestPath(const T &s);   //TODO...
-	vector<T> getPathTo(const T &dest) const;   //TODO...
+	void unweightedShortestPath(const T &s);
+	void dijkstraShortestPath(const T &s);
+	void bellmanFordShortestPath(const T &s);
+	vector<T> getPathTo(const T &dest) const;
 
 	// Fp05 - all pairs
-	void floydWarshallShortestPath();   //TODO...
-	vector<T> getfloydWarshallPath(const T &origin, const T &dest) const;   //TODO...
+	vector<vector<T>> distMinMatrix;
+	vector<vector<Vertex<T>*>> pathMatrix;
+
+	void floydWarshallShortestPath();
+	vector<T> getfloydWarshallPath(const T &origin, const T &dest) const;
 
 };
 
@@ -358,6 +361,80 @@ vector<T> Graph<T>::getPathTo(const T &dest) const{
 template<class T>
 void Graph<T>::floydWarshallShortestPath() {
 
+    int numVertex=this->getNumVertex();
+
+    this->distMinMatrix.resize(numVertex);
+    this->pathMatrix.resize(numVertex);
+
+    for(auto & ele:this->distMinMatrix) ele.resize(numVertex);
+    for(auto & ele:this->pathMatrix) ele.resize(numVertex);
+
+
+    //Pre processing
+    for(int i=0;i<numVertex;i++){
+
+        for(int j=0;j<numVertex;j++){
+
+            if(i==j){
+                this->distMinMatrix.at(i).at(j)=0;
+                this->pathMatrix.at(i).at(j)=this->vertexSet.at(i);
+            }
+            else{
+                this->distMinMatrix.at(i).at(j)=999999;
+                this->pathMatrix.at(i).at(j)=NULL;
+            }
+        }
+    }
+
+    //Transform graph information with matrix dimention
+    for(const Vertex<T>*vertex:this->vertexSet){
+
+        int originIndex=-1;
+
+        for(int i=0;i<numVertex;i++){
+            if(vertex->info==this->vertexSet.at(i)->info)
+                originIndex=i;
+        }
+
+        for(const Edge<T> edge:vertex->adj){
+
+            //Need index for either the start either the destination vertexs to setup the matrix
+
+            int destIndex=-1;
+            Vertex<T>* dest=edge.dest;
+
+            for(int i=0;i<numVertex;i++){
+                if(dest->info==this->vertexSet.at(i)->info)
+                    destIndex=i;
+            }
+
+            if(originIndex==-1||destIndex==-1){
+                cout<<"Error preprocessing FloyWarshall, indexs for the matrix were negative"<<endl;
+                return;
+            }
+
+            this->distMinMatrix.at(originIndex).at(destIndex)=edge.weight;
+            this->pathMatrix.at(originIndex).at(destIndex)=edge.dest;
+        }
+
+    }
+
+    //Matrix setuped, floydWarshall algorithm starts
+
+
+    for(int k=0;k<numVertex;k++){
+
+        for(int i=0;i<numVertex;i++){
+
+            for(int j=0;j<numVertex;j++){
+
+                if(this->distMinMatrix.at(i).at(j)<(this->distMinMatrix.at(i).at(k)+this->distMinMatrix.at(k).at(j))){
+                    this->distMinMatrix.at(i).at(j)=this->distMinMatrix.at(i).at(k)+this->distMinMatrix.at(k).at(j);
+                    this->pathMatrix.at(i).at(j)=this->pathMatrix.at(k).at(j);
+                }
+            }
+        }
+    }
 
     return;
 }
@@ -366,10 +443,39 @@ template<class T>
 vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 	vector<T> res;
 
+    Vertex<T> * v1, * v2;
+    v1 = findVertex(orig);
+    v2 = findVertex(dest);
 
+    if (v1 == NULL || v2 == NULL) return res;
 
+	int originIndex=-1;
+	int destinationIndex=-1;
+	int numVertex=this->getNumVertex();
 
-	// TODO
+	for(int i=0;i<numVertex;i++){
+        if (vertexSet.at(i)->info == v1->info)
+            originIndex=i;
+        else if(vertexSet.at(i)->info == v2->info)
+            destinationIndex=i;
+	}
+
+	if(originIndex==-1||destinationIndex==-1){
+	    cout<<"Error in indexs of getFloydWarshall"<<endl;
+	    return res;
+	}
+
+    if (this->pathMatrix.at(originIndex).at(destinationIndex) == NULL) return res;
+    res.push_back(v1->info);
+
+    while(v1->info != v2->info) {
+        v1 = this->pathMatrix.at(originIndex).at(destinationIndex);
+        res.push_back(v1->info);
+        for (int i = 0; i < numVertex; i++)
+            if (vertexSet.at(i)->info == v1->info)
+                originIndex = i;
+    }
+
 	return res;
 }
 
