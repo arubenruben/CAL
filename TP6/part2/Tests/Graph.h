@@ -428,6 +428,25 @@ vector<Vertex<T>* > Graph<T>::calculatePrim() {
 template <class T>
 vector<Vertex<T>*> Graph<T>::calculateKruskal() {
 	// TODO
+    vector<Vertex<T>> disjSet;
+    MutablePriorityQueue<Edge<T>> queueAux;
+    int numberEdgesAccepted=0;
+
+    for (Vertex<T> * vertex : vertexSet) {
+        vertex->disjSet.push_back(vertex);
+        for (const Edge<T> & edge : vertex->adj)
+            queueAux.push(edge);
+    }
+
+    while (numberEdgesAccepted<this->vertexSet.size()-1){
+        Edge<T> edge=queueAux.extractMin();
+
+
+
+
+    }
+
+
 	return vertexSet;
 }
 
