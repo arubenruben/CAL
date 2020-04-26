@@ -366,15 +366,60 @@ vector<T> Graph<T>::getfloydWarshallPath(const T &orig, const T &dest) const{
 /**************** Minimum Spanning Tree  ***************/
 template <class T>
 bool Graph<T>::addBidirectionalEdge(const T &sourc, const T &dest, double w) {
-    // TODO
-    return false;
+
+    if(this->addEdge(sourc,dest,w)==false||this->addEdge(dest,sourc,w)==false){
+        cout<<"Error adding bidirectional edge"<<endl;
+        return false;
+    }
+    return true;
 }
-
-
 
 template <class T>
 vector<Vertex<T>* > Graph<T>::calculatePrim() {
 	// TODO
+
+    //Prim can start in any vertex
+	Vertex <T>* start=this->vertexSet.at(0);
+    MutablePriorityQueue<Vertex<T>> queueAux;
+	//Pre processamento
+	for(Vertex<T>* vertex:this->vertexSet){
+        vertex->dist=INF;
+        vertex->path=NULL;
+        vertex->visited=false;
+	}
+
+	start->dist=0;
+
+	queueAux.insert(start);
+
+	while (!queueAux.empty()){
+
+	    Vertex<T>* aux=queueAux.extractMin();
+        aux->visited=true;
+
+	    for(Edge<T> edge:aux->adj){
+
+	        if(edge.dest->visited)
+	            continue;
+
+	        if(edge.dest->dist>edge.weight){
+
+	            //NOT IN QUEUE
+	            if(edge.dest->dist==INF){
+                    edge.dest->dist=edge.weight;
+                    edge.dest->path=edge.orig;
+                    queueAux.insert(edge.dest);
+                    //Alterar prioridades na heap pq houve uma alteração de valor de um vertice previamente inserido
+	            }else{
+                    edge.dest->dist=edge.weight;
+                    edge.dest->path=edge.orig;
+	                queueAux.decreaseKey(edge.dest);
+	            }
+	        }
+	    }
+	}
+
+
 	return vertexSet;
 }
 
