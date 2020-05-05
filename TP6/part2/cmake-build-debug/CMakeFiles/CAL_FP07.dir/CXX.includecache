@@ -525,6 +525,8 @@ algorithm
 -
 unordered_set
 -
+queue
+-
 MutablePriorityQueue.h
 /home/ruben/Desktop/FEUP/CAL/TPs/TP6/part2/Tests/MutablePriorityQueue.h
 

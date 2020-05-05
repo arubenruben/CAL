@@ -9,6 +9,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_set>
+#include <queue>
 #include "MutablePriorityQueue.h"
 
 using namespace std;
@@ -29,6 +30,7 @@ class Vertex {
 	double dist = 0;
 	Vertex<T> *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
+    vector<Vertex<T> *> disjSet;
 
 	void addEdge(Vertex<T> *dest, double w);
 
@@ -93,6 +95,11 @@ public:
 
 	// Fp07
 	double getWeight() const;
+
+    bool operator<(const Edge<T> & e) const {
+        return weight < e.weight;
+    }
+
 };
 
 template <class T>
@@ -427,27 +434,25 @@ vector<Vertex<T>* > Graph<T>::calculatePrim() {
 
 template <class T>
 vector<Vertex<T>*> Graph<T>::calculateKruskal() {
-	// TODO
-    vector<Vertex<T>> disjSet;
-    MutablePriorityQueue<Edge<T>> queueAux;
-    int numberEdgesAccepted=0;
 
+    priority_queue<Edge<T>> Q;
     for (Vertex<T> * vertex : vertexSet) {
         vertex->disjSet.push_back(vertex);
         for (const Edge<T> & edge : vertex->adj)
-            queueAux.push(edge);
+            Q.push(edge);
     }
 
-    while (numberEdgesAccepted<this->vertexSet.size()-1){
-        Edge<T> edge=queueAux.extractMin();
+    int edgesAccepted = 0;
+    while(edgesAccepted < vertexSet.size()-1) {
+        Edge<T> curr = Q.top();
+        Q.pop();
 
-
-
-
+        vector<Vertex<T>*> u = curr.orig->disjSet;
+        vector<Vertex<T>*> v = curr.dest->disjSet;
     }
 
+    return vertexSet;
 
-	return vertexSet;
 }
 
 
